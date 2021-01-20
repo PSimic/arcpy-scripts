@@ -13,4 +13,4 @@ for fc in arcpy.Describe(geodatabase).children:
         type_of_relationship = fc.name.split("_")[-1]
         if type_of_relationship == "AttrSrcRC" or type_of_relationship == "AttrSrcRT" or type_of_relationship == "AttributeSource":
             arcpy.Delete_management(fc.catalogPath)
-            arcpy.AddMessage("Relationship class: " + fc.name + " deleted")
+            arcpy.AddMessage(fc.name + " deleted")

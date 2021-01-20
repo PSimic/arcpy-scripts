@@ -15,5 +15,10 @@ arcpy.env.workspace = geodatabase
 cursor = arcpy.SearchCursor(location_of_table)
 
 for row in cursor:
-    arcpy.CreateRelationshipClass_management(row.getValue("origin"), row.getValue("destina"), row.getValue("out_rc"), row.getValue("r_type"), row.getValue("forw_label"), row.getValue("back_label"), row.getValue("msg_dir"), row.getValue("cardin"), row.getValue("attrib"), row.getValue("prim_key"), row.getValue("fore_key"), "", "")
-    arcpy.AddMessage("Relationship class: " + row.getValue("out_rc") + " imported")
+    try:
+        arcpy.CreateRelationshipClass_management(row.getValue("origin"), row.getValue("destina"), row.getValue("out_rc"), row.getValue("r_type"), row.getValue("forw_label"), row.getValue("back_label"), row.getValue("msg_dir"), row.getValue("cardin"), row.getValue("attrib"), row.getValue("prim_key"), row.getValue("fore_key"), "", "")
+        arcpy.AddMessage(row.getValue("out_rc") + " imported")
+    except arcpy.ExecuteError:
+        arcpy.AddError(row.getValue("out_rc") + " is not imported and the reason is:") 
+        arcpy.AddError(arcpy.GetMessages(2))
+        
